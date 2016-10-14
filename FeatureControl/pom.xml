@@ -1,0 +1,181 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.lendingkart</groupId>
+  <artifactId>FeatureControl</artifactId>
+  <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>FeatureControl Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <!-- Generic properties -->
+    <java.version>1.8</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <servlet.version>3.0.1</servlet.version>
+    <!-- Spring properties -->
+    <spring.version>4.0.1.RELEASE</spring.version>
+    <logback.version>1.1.7</logback.version>
+    <jcl.slf4j.version>1.7.12</jcl.slf4j.version>
+    <!-- ff4j properties -->
+    <ff4j.version>1.3</ff4j.version>
+    <!-- mysql and dbcp -->
+    <mysql.version>5.0.8</mysql.version>
+    <dbcp.version>1.4</dbcp.version>
+  </properties>
+  <dependencies>
+
+	<!-- *************FF4J************* -->
+	<dependency>
+		<groupId>org.ff4j</groupId>
+		<artifactId>ff4j-core</artifactId>
+		<version>${ff4j.version}</version>
+	</dependency>	
+	
+	<!-- for web console -->
+	<dependency>
+		<groupId>org.ff4j</groupId>
+		<artifactId>ff4j-web</artifactId>
+		<version>${ff4j.version}</version>
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/org.ff4j/ff4j-security-spring -->
+	<dependency>
+		<groupId>org.ff4j</groupId>
+		<artifactId>ff4j-security-spring</artifactId>
+		<version>${ff4j.version}</version>
+	</dependency>
+	
+	
+	
+	
+	<!-- *************SPRING************* -->
+	 <!-- Spring dependencies -->
+     		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+ 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+ 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-ldap</artifactId>
+		    <version>${spring.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-taglibs</artifactId>
+		    <version>${spring.version}</version>
+		</dependency>
+		
+	<!--********* For Mysql && dbcp **************-->	
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>${mysql.version}</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>commons-dbcp</groupId>
+		<artifactId>commons-dbcp</artifactId>
+		<version>${dbcp.version}</version>
+	</dependency>
+
+
+	<!--********* For GSON **************-->
+	<dependency>
+		<groupId>com.google.code.gson</groupId>
+		<artifactId>gson</artifactId>
+		<version>2.7</version>
+	</dependency>
+	
+		
+	
+	<!-- *************OTHERS************* -->
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>javax.servlet-api</artifactId>
+		<version>${servlet.version}</version>
+		<scope>provided</scope>
+	</dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <finalName>FeatureControl</finalName>
+    <plugins>
+    		<!-- <plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<version>6.1.26</version>
+				<configuration>
+					<useTestClasspath>true</useTestClasspath>
+					<contextPath>/FeatureControl</contextPath>
+					<scanIntervalSeconds>5</scanIntervalSeconds>
+					<stopPort>8065</stopPort>
+					<connectors>
+						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+							<port>8080</port>
+							<maxIdleTime>60000</maxIdleTime>
+						</connector>
+					</connectors>
+				</configuration>
+			</plugin> -->
+    
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <compilerArguments>
+                        <Xlint/>
+                    </compilerArguments>
+                    <verbose>true</verbose>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <showWarnings>true</showWarnings>
+                </configuration>
+            </plugin>
+   </plugins>
+  </build>
+</project>

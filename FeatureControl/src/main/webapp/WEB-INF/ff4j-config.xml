@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd" >
+	
+	
+	<context:property-placeholder location="classpath:db.properties" />
+	<context:annotation-config />
+	
+	
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="validationQuery" value="SELECT 1"></property>
+		<property name="testWhileIdle" value="true"></property>
+		<property name="timeBetweenEvictionRunsMillis" value="25200000"></property>
+		<property name="driverClassName" value="${db.driver}" />
+		<property name="url" value="${db.host.url}" />
+		<property name="username" value="${db.user}" />
+		<property name="password" value="${db.password}" />
+		<property name="removeAbandoned" value="true" />
+		<property name="initialSize" value="10" />
+		<property name="maxActive" value="50" />
+	</bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	
+	<bean id="ff4j.store" class="org.ff4j.store.JdbcFeatureStore" >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="ff4j.cache" class="org.ff4j.cache.InMemoryCacheManager">
+		<property name="ttl" value="1" />
+	</bean>
+	
+	<bean id="ff4j.storeproxy" class="org.ff4j.cache.FeatureStoreCacheProxy">
+		<property name="target" ref="ff4j.store" />
+		 <property name="cacheManager" ref="ff4j.cache" /> 
+	</bean>
+	
+	<!-- <bean id="ff4j.customAuthManager" class="com.lendingkart.featurecontrol.AuthManager.CustomAuthorizationManager">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean> -->
+	
+	<!-- FF4J -->
+	<bean id="ff4j" class="org.ff4j.FF4j" >
+		<property name="store" ref="ff4j.storeproxy" />
+		 <property name="authorizationsManager" >
+			<bean class="com.lendingkart.featurecontrol.AuthManager.CustomAuthorizationManager" /> 
+		</property>
+	</bean>
+	<!-- <bean class="com.lendingkart.featurecontrol.AuthManager.CustomAuthorizationManager" /> -->
+	<!-- <bean id="ff4j" class="org.ff4j.FF4j" >
+		<property name="store" ref="ff4j.storeproxy" />
+		<property name="authorizationsManager" >
+			<bean class="org.ff4j.security.SpringSecurityAuthorisationManager" />
+		</property>
+	</bean> -->
+	
+</beans>
